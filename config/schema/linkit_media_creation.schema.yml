@@ -1,0 +1,11 @@
+# Plugin \Drupal\linkit_media_creation\Plugin\Linkit\Matcher\MediaMatcher
+linkit.matcher.entity:media:
+  type: linkit.matcher.entity
+  mapping:
+    media_creation_link:
+      type: boolean
+    media_creation_link_bundles:
+      type: sequence
+      sequence:
+        type: string
+      nullable: true

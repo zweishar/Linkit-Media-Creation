@@ -1,0 +1,18 @@
+dialogue:
+  js:
+    js/dialogue.js: {}
+  dependencies:
+    - core/jquery
+
+commands:
+  js:
+    js/commands.js: {}
+  dependencies:
+    - core/drupal.ajax
+    - core/jquery
+
+dialogueForm:
+  js:
+    js/dialogueForm.js: {}
+  dependencies:
+    - core/jquery
