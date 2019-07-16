@@ -4,6 +4,7 @@ namespace Drupal\linkit_media_creation\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\UrlHelper;
 
 /**
  * LinkitMediaCreationDialogueForm.
@@ -29,7 +30,23 @@ class LinkitMediaCreationDialogueForm extends FormBase {
    */
   public function __construct() {
     $this->inputId = '123';
-    $this->bundles = ['image'];
+
+    $current_uri = \Drupal::requestStack()->getCurrentRequest()->getRequestUri();
+    $allowedBundles = explode(',', UrlHelper::parse($current_uri)['query']['bundles']);
+    $allowedBundles = array_map(function ($bundleLabel) {
+      return trim($bundleLabel);
+    }, $allowedBundles);
+
+    $this->bundles = [];
+    $allBundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('media');
+
+    foreach ($allBundles as $bundleName => $bundle) {
+      $this->bundles[$bundleName] = $bundle['label'];
+    }
+
+    $this->bundles = array_filter($this->bundles, function ($bundleLabel, $bundleName) use ($allowedBundles) {
+      return in_array($bundleName, $allowedBundles);
+    }, ARRAY_FILTER_USE_BOTH);
   }
 
   /**
