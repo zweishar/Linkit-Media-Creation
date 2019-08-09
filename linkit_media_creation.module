@@ -89,7 +89,7 @@ function linkit_media_creation_form_editor_link_dialog_alter(&$form, FormStateIn
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function linkit_media_creation_form_media_document_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function linkit_media_creation_form_media_file_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if (\Drupal::routeMatch()->getRouteName() == 'linkit_media_creation.dialogue') {
     $form['actions']['submit']['#ajax'] = [
       'callback' => 'linkit_media_creation_ajax_callback',
