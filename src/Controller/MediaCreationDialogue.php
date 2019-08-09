@@ -9,7 +9,6 @@ use Drupal\Core\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\linkit_media_creation\Form\LinkitMediaCreationDialogueForm;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Create media dialogue.
@@ -82,8 +81,6 @@ class MediaCreationDialogue extends ControllerBase {
       $form = $this->formBuilder->getForm($form);
     }
 
-    // $form['#theme'] = ['linkit_media_creation'];
-    // $form['#form'] = $form;
     return $form;
   }
 

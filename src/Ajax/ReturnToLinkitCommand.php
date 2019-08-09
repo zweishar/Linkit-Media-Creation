@@ -17,13 +17,6 @@ class ReturnToLinkitCommand implements CommandInterface {
   protected $returnValue;
 
   /**
-   * Form ID to return to.
-   *
-   * @var string
-   */
-  protected $inputId;
-
-  /**
    * Linkit substitution handler.
    *
    * @var string
@@ -47,9 +40,8 @@ class ReturnToLinkitCommand implements CommandInterface {
   /**
    * {@inheritdoc}
    */
-  public function __construct($returnValue, $inputId, $entitySubstitution, $entityType, $entityUUID) {
+  public function __construct($returnValue, $entitySubstitution, $entityType, $entityUUID) {
     $this->returnValue = $returnValue;
-    $this->inputId = $inputId;
     $this->entitySubstitution = $entitySubstitution;
     $this->entityType = $entityType;
     $this->entityUUID = $entityUUID;
@@ -62,7 +54,6 @@ class ReturnToLinkitCommand implements CommandInterface {
     return [
       'command' => 'returnToLinkit',
       'returnValue' => $this->returnValue,
-      'inputId' => $this->inputId,
       'entitySubstitution' => $this->entitySubstitution,
       'entityType' => $this->entityType,
       'entityUUID' => $this->entityUUID,

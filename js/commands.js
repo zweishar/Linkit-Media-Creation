@@ -20,7 +20,7 @@
       "edit-href-dirty-check": response.returnValue
     };
 
-    var form = $("#" + response.inputId, opener.document);
+    var form = $("#" + 'linkit-editor-dialog-form', opener.document);
 
     if (form.length > 0) {
       for (var key in Formfields) {

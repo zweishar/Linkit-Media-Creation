@@ -4,33 +4,12 @@ namespace Drupal\linkit_media_creation\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\UrlHelper;
 
 /**
  * LinkitMediaCreationDialogueForm.
  */
 class LinkitMediaCreationDialogueForm extends FormBase {
-
-  /**
-   * Id of form to return to.
-   *
-   * @var string
-   */
-  protected $inputId;
-
-  /**
-   * Bundles to render as form options.
-   *
-   * @var array
-   */
-  protected $bundles;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct() {
-    $this->inputId = '123';
-    $this->bundles = ['image'];
-  }
 
   /**
    * {@inheritdoc}
@@ -43,10 +22,19 @@ class LinkitMediaCreationDialogueForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $current_uri = \Drupal::requestStack()->getCurrentRequest()->getRequestUri();
+    $allowedBundles = explode(',', UrlHelper::parse($current_uri)['query']['bundles']);
+    $allowedBundles = array_map('trim', $allowedBundles);
+    $allowedBundles = array_flip($allowedBundles);
+    $allBundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('media');
+    $options = [];
+    foreach (array_intersect_key($allBundles, $allowedBundles) as $bundle => $info) {
+      $options[$bundle] = $info['label'];
+    }
     $form['bundles'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Select media type to create.'),
-      '#options' => $this->bundles,
+      '#options' => $options,
       '#id' => 'linkit-media-creation-dialogue-options',
     ];
     $form['submit'] = [
@@ -64,7 +52,7 @@ class LinkitMediaCreationDialogueForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $bundle = array_filter($form_state->getValue('bundles'));
     $bundle = array_keys($bundle)['0'];
-    $form_state->setRedirect('linkit_media_creation.dialogue', [], ['query' => ['inputId' => $this->inputId, 'bundles' => $bundle]]);
+    $form_state->setRedirect('linkit_media_creation.dialogue', [], ['query' => ['bundles' => $bundle]]);
   }
 
 }

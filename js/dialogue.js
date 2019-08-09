@@ -37,7 +37,7 @@
       var button = document.createElement("a");
       button.href = "#";
       button.className = "linkit-media-creation-url-button";
-      button.innerHTML = "<span>" + Drupal.t("Create new document") + "</span>";
+      button.innerHTML = "<span>" + Drupal.t("Create new media") + "</span>";
       button.onclick = linkitMediaInput.urlButtonClick;
       button.InputId =
         inputId || "inkit-media-creation-" + (Math.random() + "").substr(2);
