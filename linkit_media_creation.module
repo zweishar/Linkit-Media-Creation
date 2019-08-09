@@ -9,6 +9,31 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\linkit_media_creation\Ajax\ReturnToLinkitCommand;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function linkit_media_creation_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+
+    case 'help.page.linkit_media_creation':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Create media entites from linkit modal form.') . '</p>';
+
+            // Add a link to the Drupal.org project.
+      $output .= '<p>';
+      $output .= t('Visit the <a href=":project_link">Linkit Media Creation project page</a> on Drupal.org for more information.',[
+        ':project_link' => 'https://www.drupal.org/project/linkit_media_creation'
+        ]);
+      $output .= '</p>';
+
+      return $output;
+
+    default:
+  }
+}
 
 /**
  * Implements hook_theme().
